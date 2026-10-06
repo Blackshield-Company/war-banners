@@ -1,0 +1,16 @@
+namespace WarBanners.Generator;
+
+internal static class Texts
+{
+    public const string Choose = "Which standard do you plant?";
+    public const string NoStandard = "You carry no war standard. Make one at a tanning rack.";
+    public const string Cooldown = "Your arm is still tired from the last standard. Ready again in %.0f hours.";
+    public const string Mounted = "You can't plant a standard from the saddle.";
+    public const string Planted = "The standard is planted. You and your companions nearby rally for %.0f seconds.";
+    public const string Faded = "The rally fades. Activate the standard to take it down.";
+    public const string FirstStandard =
+        "War Banners\n\nYou carry a war standard. Use the lesser power Plant War Banner to plant it in front of you: " +
+        "for a short time you and any followers close to it rally around it.\n\n" +
+        "Shieldwall Standard: +60 armor. Long March Standard: stamina regenerates 50% faster. Both: weapons do 10% more damage.\n\n" +
+        "Activate a planted standard to take it down. A standard can be planted once every few hours.";
+}

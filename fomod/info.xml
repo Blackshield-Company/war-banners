@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fomod>
+  <Name>War Banners</Name>
+  <Author>synthalorian</Author>
+  <Version>@VERSION@</Version>
+  <Website>https://github.com/synthalorian/war-banners</Website>
+  <Description>Craft war standards at a tanning rack and plant them with a lesser power: you and nearby followers rally around them for a short time (armor or stamina regeneration, plus weapon damage). Vanilla banner meshes, no world edits. Base game only, no SKSE. Early beta.</Description>
+  <Groups>
+    <element>Gameplay</element>
+  </Groups>
+</fomod>
