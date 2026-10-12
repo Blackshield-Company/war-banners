@@ -1,17 +1,17 @@
 # Nexus Mods page: War Banners
 
-Early beta: v0.1.0 passed every automated build check but hasn't been playtested in-game. The page says so up front. Exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
+Early beta: v0.2.0 passed every automated build check but hasn't been playtested in-game. The page says so up front. Exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
 
 ## Page settings
 
 - **Game:** Skyrim Special Edition
 - **Mod name:** War Banners
-- **Version:** 0.1.0 (early beta)
+- **Version:** 0.2.0 (early beta)
 - **Category:** Gameplay
 - **Suggested tags:** Gameplay, Combat, Crafting, Followers, Buffs, Lore-Friendly, ESL, No SKSE, Scripted
 - **Requirements:** none.
 - **Permissions (suggested):** source on GitHub under MIT, so allow modification and conversions with credit. Don't allow re-uploads of the archive itself.
-- **File to upload:** `WarBanners-0.1.0.zip` (FOMOD), main file, named "War Banners".
+- **File to upload:** `WarBanners-0.2.0.zip` (FOMOD), main file, named "War Banners".
 
 ## Description (paste into the BBCode editor)
 
@@ -19,18 +19,19 @@ Early beta: v0.1.0 passed every automated build check but hasn't been playtested
 [center][size=6][b]WAR BANNERS[/b][/size]
 [size=3][i]Plant the colours. Hold the line.[/i][/size]
 
-[size=3][color=#e0a030][b]EARLY BETA (v0.1.0)[/b]: this version passes every automated build check but hasn't been playtested in-game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log.[/color][/size][/center]
+[size=3][color=#e0a030][b]EARLY BETA (v0.2.0)[/b]: this version passes every automated build check but hasn't been playtested in-game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log.[/color][/size][/center]
 
 [line]
 
 [size=4][b]Summary[/b][/size]
-Make a war standard at a tanning rack, plant it where the fighting is, and rally around it. You and your followers close to the standard fight harder for a short time. Then take it down and carry it to the next fight.
+Make a war banner at a tanning rack or a forge, plant it where the fighting is, and rally around it. You and your followers close to the banner fight harder for a short time. Then take it down and carry it to the next fight.
 
-[size=4][b]The standards[/b][/size]
+[size=4][b]The banners[/b][/size]
+Each banner has one buff. Make them at a tanning rack or a forge.
 [list]
-[*][b]Shieldwall Standard[/b] (Imperial colours): [b]+60 armor[/b]. 3 Leather, 2 Leather Strips, 2 Iron Ingots, 1 Firewood.
-[*][b]Long March Standard[/b] (Stormcloak colours): [b]stamina regenerates 50% faster[/b]. 3 Leather, 2 Leather Strips, 1 Iron Ingot, 2 Firewood.
-[*]Both: weapon attacks do [b]10% more damage[/b].
+[*][b]Banner of the Shield[/b] (Imperial colours): [b]+60 armor[/b]. 3 Leather, 2 Leather Strips, 2 Iron Ingots, 1 Firewood.
+[*][b]Banner of the Oath[/b] (Stormcloak colours): [b]stamina regenerates 50% faster[/b]. 3 Leather, 2 Leather Strips, 1 Iron Ingot, 2 Firewood.
+[*][b]Banner of the Claw[/b] (red cloth): weapon attacks do [b]10% more damage[/b]. 2 Leather, 3 Leather Strips, 2 Iron Ingots, 1 Firewood.
 [/list]
 
 [size=4][b]How it works[/b][/size]

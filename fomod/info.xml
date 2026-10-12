@@ -4,7 +4,7 @@
   <Author>synthalorian</Author>
   <Version>@VERSION@</Version>
   <Website>https://github.com/synthalorian/war-banners</Website>
-  <Description>Craft war standards at a tanning rack and plant them with a lesser power: you and nearby followers rally around them for a short time (armor or stamina regeneration, plus weapon damage). Vanilla banner meshes, no world edits. Base game only, no SKSE. Early beta.</Description>
+  <Description>Craft three war banners at a tanning rack or a forge and plant them with a lesser power: you and nearby followers rally around them for a short time. Each banner has one buff (armor, stamina regeneration, or weapon damage). Vanilla banner meshes, no world edits. Base game only, no SKSE. Early beta.</Description>
   <Groups>
     <element>Gameplay</element>
   </Groups>

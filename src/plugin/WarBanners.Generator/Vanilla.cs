@@ -21,6 +21,7 @@ internal static class Vanilla
 
     // Crafting
     public static readonly FormKey CraftingTanningRack = K(0x07866A);
+    public static readonly FormKey CraftingSmithingForge = K(0x088105);
     public static readonly FormKey Leather01 = K(0x0DB5D2);
     public static readonly FormKey LeatherStrips = K(0x0800E4);
     public static readonly FormKey IngotIron = K(0x05ACE4);
@@ -29,6 +30,7 @@ internal static class Vanilla
     // Banner cloths placed on the planted pole (vanilla moveable statics, placed by script)
     public static readonly FormKey CivilWarBannerImp01 = K(0x097ED9);
     public static readonly FormKey CivilWarBannerStorm01 = K(0x02BEBB);
+    public static readonly FormKey GenericBannerRed01 = K(0x0D2009);
 
     public const string MeshBannerPole = @"Clutter\CivilWar\CivilWarBanner01.nif";
     public const string MeshBannerCloth = @"Clutter\CivilWar\CivilWarBannerImp01.nif";

@@ -24,6 +24,11 @@ Form[] Property Cloths Auto
 Spell[] Property Rallies Auto
 {Short buff per type, re-applied every pulse to everyone in range.}
 
+MiscObject Property WBN_StandardClaw Auto
+Activator Property WBN_PoleClaw Auto
+Form Property WBN_ClothClaw Auto
+Spell Property WBN_RallyClaw Auto
+
 Quest Property WBN_RallyQuest Auto
 ReferenceAlias[] Property Followers Auto
 {WBN_RallyQuest's follower aliases (nearest player teammates in the loaded area).}
@@ -56,7 +61,37 @@ Function StandardAcquired()
 	EndIf
 EndFunction
 
+Function UpgradeArrays()
+	If Standards.Length >= 3
+		Return
+	EndIf
+	MiscObject[] nextStandards = new MiscObject[3]
+	nextStandards[0] = Standards[0]
+	nextStandards[1] = Standards[1]
+	nextStandards[2] = WBN_StandardClaw
+	Standards = nextStandards
+
+	Activator[] nextPoles = new Activator[3]
+	nextPoles[0] = Poles[0]
+	nextPoles[1] = Poles[1]
+	nextPoles[2] = WBN_PoleClaw
+	Poles = nextPoles
+
+	Form[] nextCloths = new Form[3]
+	nextCloths[0] = Cloths[0]
+	nextCloths[1] = Cloths[1]
+	nextCloths[2] = WBN_ClothClaw
+	Cloths = nextCloths
+
+	Spell[] nextRallies = new Spell[3]
+	nextRallies[0] = Rallies[0]
+	nextRallies[1] = Rallies[1]
+	nextRallies[2] = WBN_RallyClaw
+	Rallies = nextRallies
+EndFunction
+
 Function GameLoaded()
+	UpgradeArrays()
 	Actor player = Game.GetPlayer()
 	If !player.HasSpell(WBN_PowerPlant) && CarriedCount() > 0
 		WBN_PowerGranted.SetValueInt(1)
@@ -69,6 +104,7 @@ Function GameLoaded()
 EndFunction
 
 Function UsePower()
+	UpgradeArrays()
 	Actor player = Game.GetPlayer()
 	If player.IsOnMount()
 		WBN_MsgMounted.Show()

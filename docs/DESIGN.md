@@ -1,22 +1,27 @@
-# Design notes (v0.1, early beta)
+# Design notes (v0.2, early beta)
 
-## Records (32, FormIDs 0x800-0x81F, ESL-flagged, Skyrim.esm only, no overrides)
+## Records (39, FormIDs 0x800-0x826, ESL-flagged, Skyrim.esm only, no overrides)
 
 | EditorID | Type | Purpose |
 |---|---|---|
 | `WBN_BannerQuest` | QUST (Start Game Enabled, Run Once) | Controller (`WBN_BannerScript`). Alias 0 = player (`WBN_PlayerAliasScript`: inventory filter on `WBN_StandardList`, grants the power on the first standard, re-checks on load). In `SEQ/WarBanners.seq`. |
 | `WBN_RallyQuest` | QUST | Started when a standard is planted, stopped when the rally ends. Five optional *Find Matching Reference* aliases (in loaded area, closest; conditions `GetPlayerTeammate == 1`, `GetDead == 0`). No packages, factions or flags: the aliases only let the controller find followers without SKSE. |
-| `WBN_StandardShieldwall`, `WBN_StandardLongMarch` | MISC | The standards (vanilla banner cloth mesh `Clutter\CivilWar\CivilWarBannerImp01.nif`), weight 4, value 80. |
-| `WBN_StandardList` | FLST | Both standards (inventory event filter). |
-| `WBN_PoleShieldwall`, `WBN_PoleLongMarch` | ACTI | The planted pole (vanilla mesh `Clutter\CivilWar\CivilWarBanner01.nif`), activation text "Take down", script `WBN_PlantedScript`. |
-| `WBN_RallyShieldwall`, `WBN_RallyLongMarch` | SPEL (fire and forget, self, 6 s) | The rally: `WBN_EffShieldwall` 60 or `WBN_EffLongMarch` 50, plus `WBN_EffValor` 0.1. |
-| `WBN_EffShieldwall`, `WBN_EffLongMarch`, `WBN_EffValor` | MGEF (value modifier, recover) | DamageResist, StaminaRateMult, AttackDamageMult. |
+| `WBN_StandardShieldwall`, `WBN_StandardLongMarch`, `WBN_StandardClaw` | MISC | Display names Banner of the Shield, Banner of the Oath, Banner of the Claw (vanilla banner cloth mesh `Clutter\CivilWar\CivilWarBannerImp01.nif`), weight 4, value 80. |
+| `WBN_StandardList` | FLST | All three banners (inventory event filter). |
+| `WBN_PoleShieldwall`, `WBN_PoleLongMarch`, `WBN_PoleClaw` | ACTI | The planted pole (vanilla mesh `Clutter\CivilWar\CivilWarBanner01.nif`), activation text "Take down", script `WBN_PlantedScript`. |
+| `WBN_RallyShieldwall`, `WBN_RallyLongMarch`, `WBN_RallyClaw` | SPEL (fire and forget, self, 6 s) | One effect each: `WBN_EffShieldwall` 60, `WBN_EffLongMarch` 50, or `WBN_EffValor` 0.1. Names Rally: Shield, Rally: Oath, Rally: Claw. |
+| `WBN_EffShieldwall`, `WBN_EffLongMarch`, `WBN_EffValor` | MGEF (value modifier, recover) | Names Rally: Shield, Rally: Oath, Rally: Claw. DamageResist, StaminaRateMult, AttackDamageMult. Valor's description keeps a literal "10%" because magnitude 0.1 would display as 0.1. |
 | `WBN_PowerPlant`, `WBN_PowerEffect` | SPEL (lesser power) + MGEF (script) | "Plant War Banner". |
-| `WBN_RecipeShieldwall`, `WBN_RecipeLongMarch` | COBJ (tanning rack) | Recipes. |
+| `WBN_RecipeShieldwall`, `WBN_RecipeLongMarch`, `WBN_RecipeClaw` | COBJ (tanning rack) | Recipes. |
+| `WBN_ForgeShieldwall`, `WBN_ForgeLongMarch`, `WBN_ForgeClaw` | COBJ (forge) | Same ingredients as the matching tanning-rack recipe. |
 | `WBN_Msg*` | MESG | Menu, first-standard note, notifications. |
 | `WBN_*` settings | GLOB | See the README. `WBN_PowerGranted` remembers that the power was given. |
 
-The banner cloths are the vanilla moveable statics `CivilWarBannerImp01` (097ED9) and `CivilWarBannerStorm01` (02BEBB), placed by script.
+The banner cloths are the vanilla moveable statics `CivilWarBannerImp01` (097ED9), `CivilWarBannerStorm01` (02BEBB), and `GenericBannerRed01` (0D2009), placed by script.
+
+### Existing saves
+
+Papyrus Auto properties are baked into the save. A 0.1.0 save still has two-entry `Standards`, `Poles`, `Cloths`, and `Rallies` arrays. The Claw records are also filled as `WBN_StandardClaw`, `WBN_PoleClaw`, `WBN_ClothClaw`, and `WBN_RallyClaw` (new properties load from the plugin). `UpgradeArrays()`, called at the start of `GameLoaded()` and `UsePower()`, rebuilds those arrays to length 3 when `Standards.Length < 3`, copying indexes 0 and 1 and setting index 2 from the new properties. Existing FormIDs are unchanged, so a carried or planted standard keeps working. The choice menu's buttons are in array order (Banner of the Shield, Banner of the Oath, Banner of the Claw, Cancel), so the button index is the banner index.
 
 ## Planting
 
@@ -41,7 +46,7 @@ Cooldown: game time, `WBN_CooldownHours` after planting. Taking a standard down 
 
 ## Scaled down from the concept (documented on purpose)
 
-- **Planted only through the power.** Misc items can't be "used" from the inventory without SKSE, so the lesser power does the planting and picks the standard (a menu if you carry both kinds).
-- **Two standards, three effects.** Armor and stamina regeneration are the two standards' main effects; "morale" is the +10% weapon damage both share.
+- **Planted only through the power.** Misc items can't be "used" from the inventory without SKSE, so the lesser power does the planting and picks the banner (a menu if you carry more than one).
+- **Three banners, one effect each.** Armor, stamina regeneration, and +10% weapon damage are each a banner's only buff.
 - **No banner physics in the inventory.** The banner cloth mesh is the standard's model, as asked ("reuse vanilla banner meshes"), but it has no collision, so a dropped standard floats.
 - **Followers found per planting.** The follower aliases are filled when the standard is planted; someone who joins you mid-rally is included the next time.

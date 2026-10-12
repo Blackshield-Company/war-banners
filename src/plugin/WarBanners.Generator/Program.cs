@@ -37,7 +37,7 @@ internal static class Program
         mod.ModHeader.Flags |= SkyrimModHeader.HeaderFlag.Small; // ESL-flagged ESP
         mod.ModHeader.Stats.Version = 1.7f;
         mod.ModHeader.Author = "synthalorian";
-        mod.ModHeader.Description = "War Banners: craftable war standards that rally you and your followers when planted.";
+        mod.ModHeader.Description = "War Banners: three craftable banners, each with one rally buff, for you and your followers when planted.";
 
         var outPath = Path.Combine(outDir, PluginName);
         mod.BeginWrite.ToPath(outPath).WithNoLoadOrder().Write();

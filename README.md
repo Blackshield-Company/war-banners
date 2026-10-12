@@ -1,8 +1,8 @@
 # War Banners
 
-Craft a war standard, plant it in the field, and fight beside it. A small Skyrim Special Edition mod: two standards made at a tanning rack, a lesser power to plant them, and a short rally for you and your followers while you stand close.
+Craft a war banner, plant it in the field, and fight beside it. A small Skyrim Special Edition mod: three banners made at a tanning rack or a forge, a lesser power to plant them, and a short rally for you and your followers while you stand close.
 
-**Status: v0.1.0, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in-game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md).
+**Status: v0.2.0, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in-game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md).
 
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (also fine on 1.5.97). Works on Windows and on Linux through Proton.
 - Requirements: none beyond the base game. No SKSE, no SkyUI, no DLC, no Creation Club content.
@@ -11,13 +11,14 @@ Craft a war standard, plant it in the field, and fight beside it. A small Skyrim
 
 ## How it works
 
-| Standard | Made at a tanning rack from | Rally effect |
+| Banner | Made at a tanning rack or a forge from | Rally effect |
 |---|---|---|
-| Shieldwall Standard (Imperial cloth) | 3 Leather, 2 Leather Strips, 2 Iron Ingots, 1 Firewood | +60 armor, weapons do 10% more damage |
-| Long March Standard (Stormcloak cloth) | 3 Leather, 2 Leather Strips, 1 Iron Ingot, 2 Firewood | stamina regenerates 50% faster, weapons do 10% more damage |
+| Banner of the Shield (Imperial cloth) | 3 Leather, 2 Leather Strips, 2 Iron Ingots, 1 Firewood | +60 armor |
+| Banner of the Oath (Stormcloak cloth) | 3 Leather, 2 Leather Strips, 1 Iron Ingot, 2 Firewood | stamina regenerates 50% faster |
+| Banner of the Claw (red cloth) | 2 Leather, 3 Leather Strips, 2 Iron Ingots, 1 Firewood | weapons do 10% more damage |
 
 1. Get a standard. The first time, you learn the lesser power **Plant War Banner** and a short note explains it.
-2. Use the power. The standard is planted a couple of steps in front of you (if you carry both kinds, you pick one).
+2. Use the power. The banner is planted a couple of steps in front of you (if you carry more than one, you pick one).
 3. For **90 seconds**, you and up to **five followers** within about **14 m** of the standard rally: the effect is refreshed every 4 seconds and runs out a few seconds after you step away.
 4. **Activate** the standard to take it down and put it back in your pack. Planting another standard takes the first one down for you.
 5. You can plant a standard once every **4 game hours**.
@@ -41,7 +42,7 @@ Changes apply to the next standard you plant.
 
 ## Known issues (early beta)
 
-- **The cloth's height on the pole is computed, not seen.** The pole and the cloth are separate vanilla meshes that the vanilla camps place together. Their sizes were taken from the meshes' bounds (pole 5.98 m tall with a 2.3 m crossbar, cloth 2.23 m), and the pole is planted at 0.65 scale with the cloth's top at 262 units, just under the crossbar. If the cloth floats above the crossbar or sinks into it in your game, adjust `WBN_ClothOffsetZ` (higher number = higher cloth) and plant again, and please tell me the value that looks right.
+- **The cloth's height on the pole is computed, not seen.** The pole and the cloth are separate vanilla meshes that the vanilla camps place together. Their sizes were taken from the meshes' bounds (pole 5.98 m tall with a 2.3 m crossbar, cloth 2.23 m), and the pole is planted at 0.65 scale with the cloth's top at 262 units, just under the crossbar. Banner of the Claw uses a different vanilla cloth (`GenericBannerRed01`) at the same height. If a cloth floats above the crossbar or sinks into it in your game, adjust `WBN_ClothOffsetZ` (higher number = higher cloth) and plant again, and please tell me the value that looks right.
 - On a slope the pole stands at the height of your feet, so it can float a little or sink into the ground.
 - The standard in your inventory uses the banner cloth mesh. Banner meshes have no physics, so a standard dropped from your inventory hangs in the air where you dropped it. Pick it up again with activate.
 - Planted standards stay where you leave them until you take them down, even if you walk away.

@@ -26,8 +26,8 @@ internal sealed class Builder
     private FormKey Id(string editorId) => _ids.Get(editorId);
     private static FormLink<T> L<T>(FormKey k) where T : class, IMajorRecordGetter => new(k);
 
-    private sealed record StandardSpec(string Key, string Name, FormKey Cloth, string Primary, string Rally,
-        (FormKey Item, int Count)[] Recipe);
+    private sealed record StandardSpec(string Key, string Name, FormKey Cloth, FormKey Effect, float Magnitude,
+        string Rally, string RallyName, (FormKey Item, int Count)[] Recipe);
 
     public void Build()
     {
@@ -46,20 +46,25 @@ internal sealed class Builder
         var gDistance = Global("WBN_PlantDistance", 150);
 
         // --- Rally effects (short, re-applied every pulse while in range) ---------------------------
-        var effArmor = Effect("WBN_EffShieldwall", "Rally: Shieldwall", ActorValue.DamageResist,
+        const string rallyShield = "Rally: Shield";
+        const string rallyOath = "Rally: Oath";
+        const string rallyClaw = "Rally: Claw";
+        var effArmor = Effect("WBN_EffShieldwall", rallyShield, ActorValue.DamageResist,
             "Armor rating is increased by <mag> while you stand near the standard.");
-        var effStamina = Effect("WBN_EffLongMarch", "Rally: Long March", ActorValue.StaminaRateMult,
+        var effStamina = Effect("WBN_EffLongMarch", rallyOath, ActorValue.StaminaRateMult,
             "Stamina regenerates <mag>% faster while you stand near the standard.");
-        var effValor = Effect("WBN_EffValor", "Rally: Valor", ActorValue.AttackDamageMult,
+        var effValor = Effect("WBN_EffValor", rallyClaw, ActorValue.AttackDamageMult,
             "Weapon attacks do 10% more damage while you stand near the standard.");
         const int rallyDuration = 6; // pulse (4 s) + 2 s grace
 
         var specs = new[]
         {
-            new StandardSpec("Shieldwall", "Shieldwall Standard", CivilWarBannerImp01, "armor", "WBN_RallyShieldwall",
+            new StandardSpec("Shieldwall", "Banner of the Shield", CivilWarBannerImp01, effArmor, 60f, "WBN_RallyShieldwall", rallyShield,
                 new[] { (Leather01, 3), (LeatherStrips, 2), (IngotIron, 2), (Firewood01, 1) }),
-            new StandardSpec("LongMarch", "Long March Standard", CivilWarBannerStorm01, "stamina", "WBN_RallyLongMarch",
+            new StandardSpec("LongMarch", "Banner of the Oath", CivilWarBannerStorm01, effStamina, 50f, "WBN_RallyLongMarch", rallyOath,
                 new[] { (Leather01, 3), (LeatherStrips, 2), (IngotIron, 1), (Firewood01, 2) }),
+            new StandardSpec("Claw", "Banner of the Claw", GenericBannerRed01, effValor, 0.1f, "WBN_RallyClaw", rallyClaw,
+                new[] { (Leather01, 2), (LeatherStrips, 3), (IngotIron, 2), (Firewood01, 1) }),
         };
 
         var standards = new List<FormKey>();
@@ -97,36 +102,26 @@ internal sealed class Builder
             var rally = Add(new Spell(Id(s.Rally), R)
             {
                 EditorID = s.Rally,
-                Name = $"Rally: {s.Name}",
+                Name = s.RallyName,
                 Type = SpellType.Spell,
                 CastType = CastType.FireAndForget,
                 TargetType = TargetType.Self,
                 Flags = SpellDataFlag.ManualCostCalc | SpellDataFlag.NoAbsorbOrReflect,
                 EquipmentType = L<IEquipTypeGetter>(EquipEitherHand).AsNullable(),
-                Effects =
-                {
-                    s.Key == "Shieldwall" ? Fx(effArmor, 60, rallyDuration) : Fx(effStamina, 50, rallyDuration),
-                    Fx(effValor, 0.1f, rallyDuration),
-                },
+                Effects = { Fx(s.Effect, s.Magnitude, rallyDuration) },
             });
             rallies.Add(rally.FormKey);
 
-            var cobj = new ConstructibleObject(Id($"WBN_Recipe{s.Key}"), R)
-            {
-                EditorID = $"WBN_Recipe{s.Key}",
-                CreatedObject = new FormLinkNullable<IConstructibleGetter>(item.FormKey),
-                WorkbenchKeyword = new FormLinkNullable<IKeywordGetter>(CraftingTanningRack),
-                CreatedObjectCount = 1,
-                Items = s.Recipe.Select(i => new ContainerEntry { Item = new ContainerItem { Item = L<IItemGetter>(i.Item), Count = i.Count } }).ToExtendedList(),
-            };
-            _mod.ConstructibleObjects.Add(cobj);
+            Recipe($"WBN_Recipe{s.Key}", item.FormKey, CraftingTanningRack, s.Recipe);
+            Recipe($"WBN_Forge{s.Key}", item.FormKey, CraftingSmithingForge, s.Recipe);
         }
 
         var list = Add(new FormList(Id("WBN_StandardList"), R) { EditorID = "WBN_StandardList" });
         foreach (var s in standards) list.Items.Add(L<ISkyrimMajorRecordGetter>(s));
 
         // --- Messages --------------------------------------------------------------------------------
-        var msgChoose = Msg("WBN_MsgChoose", Texts.Choose, Btn(specs[0].Name), Btn(specs[1].Name), Btn("Cancel"));
+        var msgChoose = Msg("WBN_MsgChoose", Texts.Choose,
+            specs.Select(s => Btn(s.Name)).Append(Btn("Cancel")).ToArray());
         var msgNone = Notice("WBN_MsgNoStandard", Texts.NoStandard);
         var msgCooldown = Notice("WBN_MsgCooldown", Texts.Cooldown);
         var msgMounted = Notice("WBN_MsgMounted", Texts.Mounted);
@@ -207,6 +202,8 @@ internal sealed class Builder
                 Vmad.Obj("WBN_ClothOffsetZ", gClothZ), Vmad.Obj("WBN_PlantDistance", gDistance),
                 Vmad.ObjList("Standards", standards.ToArray()), Vmad.ObjList("Poles", poles.ToArray()),
                 Vmad.ObjList("Cloths", cloths.ToArray()), Vmad.ObjList("Rallies", rallies.ToArray()),
+                Vmad.Obj("WBN_StandardClaw", standards[2]), Vmad.Obj("WBN_PoleClaw", poles[2]),
+                Vmad.Obj("WBN_ClothClaw", cloths[2]), Vmad.Obj("WBN_RallyClaw", rallies[2]),
                 Vmad.Obj("WBN_RallyQuest", qRally),
                 Vmad.AliasList("Followers", qRally, Enumerable.Range(0, FollowerAliases).ToArray()),
                 Vmad.Obj("WBN_MsgChoose", msgChoose), Vmad.Obj("WBN_MsgNoStandard", msgNone), Vmad.Obj("WBN_MsgCooldown", msgCooldown),
@@ -246,6 +243,21 @@ internal sealed class Builder
         };
         _mod.MagicEffects.Add(m);
         return m.FormKey;
+    }
+
+    private void Recipe(string edid, FormKey created, FormKey bench, (FormKey Item, int Count)[] items)
+    {
+        _mod.ConstructibleObjects.Add(new ConstructibleObject(Id(edid), R)
+        {
+            EditorID = edid,
+            CreatedObject = new FormLinkNullable<IConstructibleGetter>(created),
+            WorkbenchKeyword = new FormLinkNullable<IKeywordGetter>(bench),
+            CreatedObjectCount = 1,
+            Items = items.Select(i => new ContainerEntry
+            {
+                Item = new ContainerItem { Item = L<IItemGetter>(i.Item), Count = i.Count },
+            }).ToExtendedList(),
+        });
     }
 
     private static Effect Fx(FormKey mgef, float magnitude, int duration) => new()
