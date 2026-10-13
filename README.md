@@ -67,6 +67,13 @@ docs/                              design notes, testing checklist, Nexus page
 - Built with [Mutagen](https://github.com/Mutagen-Modding/Mutagen) and [russo-2025/papyrus-compiler](https://github.com/russo-2025/papyrus-compiler).
 - The banner meshes belong to Bethesda Softworks; this mod references them from Skyrim.esm and ships no Bethesda assets. The mesh dimensions were read from a public scene kit's bounds data (jtattersall09403/elder-souls-argonia).
 
+## Support
+
+Donations are optional. Nothing in the mod is gated on them.
+
+- GitHub Sponsors: https://github.com/sponsors/synthalorian
+- Ko-fi: https://ko-fi.com/synthalorian
+
 ## License
 
 MIT (code and text in this repository). See [LICENSE](LICENSE).
