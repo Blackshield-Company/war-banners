@@ -1,3 +1,5 @@
+![war-banners](.github/preview.png)
+
 # War Banners
 
 Craft a war banner, plant it in the field, and fight beside it. A small Skyrim Special Edition mod: three banners made at a tanning rack or a forge, a lesser power to plant them, and a short rally for you and your followers while you stand close.
