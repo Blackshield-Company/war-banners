@@ -11,6 +11,14 @@ Craft a war banner, plant it in the field, and fight beside it. A small Skyrim S
 - Plugin: `WarBanners.esp`, ESL-flagged, Skyrim.esm is the only master. **No vanilla records edited and nothing placed in the world**: banners exist only where you plant them.
 - Compatible with the rest of the series ([Blackshield Company](https://github.com/synthalorian/blackshield-company), [Bounties of Oblivion](https://github.com/synthalorian/bounties-of-oblivion), [Contract Hunter](https://github.com/synthalorian/contract-hunter), [Steel Oath](https://github.com/synthalorian/steel-oath), [Ember Smithing](https://github.com/synthalorian/ember-smithing), [The Gray-Mane Debt](https://github.com/synthalorian/the-gray-mane-debt), [Blackshield Codex](https://github.com/synthalorian/blackshield-codex)): own prefix (`WBN_`), records, globals and files. Checked by loading all plugins together (see [tools/modkit](tools/modkit/README.md)).
 
+## Install
+
+1. Download the mod zip from [Releases](https://github.com/Blackshield-Company/war-banners/releases), or build it from source as described below. GitHub's source-code archives are not installable mod packages.
+2. In Mod Organizer 2 or Vortex, install the zip through its FOMOD installer and enable `WarBanners.esp`. The Papyrus source files option is only for development; players can skip it.
+3. For a manual install, copy the **contents** of `00 Core/` into Skyrim Special Edition's `Data/` directory, preserving `Scripts/` and `SEQ/`, and enable `WarBanners.esp` in your plugin list. Do not copy the enclosing `00 Core` folder itself.
+
+This remains an unplaytested early beta; see [docs/TESTING.md](docs/TESTING.md) before testing in game.
+
 ## How it works
 
 | Banner | Made at a tanning rack or a forge from | Rally effect |
