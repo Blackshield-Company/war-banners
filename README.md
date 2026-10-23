@@ -13,7 +13,7 @@ Craft a war banner, plant it in the field, and fight beside it. A small Skyrim S
 
 ## Install
 
-1. Download the mod zip from [Releases](https://github.com/Blackshield-Company/war-banners/releases), or build it from source as described below. GitHub's source-code archives are not installable mod packages.
+1. Download the mod zip from [Releases](https://github.com/synthalorian/war-banners/releases), or build it from source as described below. GitHub's source-code archives are not installable mod packages.
 2. In Mod Organizer 2 or Vortex, install the zip through its FOMOD installer and enable `WarBanners.esp`. The Papyrus source files option is only for development; players can skip it.
 3. For a manual install, copy the **contents** of `00 Core/` into Skyrim Special Edition's `Data/` directory, preserving `Scripts/` and `SEQ/`, and enable `WarBanners.esp` in your plugin list. Do not copy the enclosing `00 Core` folder itself.
 
