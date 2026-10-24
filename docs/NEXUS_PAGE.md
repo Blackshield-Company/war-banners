@@ -75,7 +75,7 @@ Take your standards down first. As with any scripted mod, prefer not to remove i
 [/list]
 
 [size=4][b]Source[/b][/size]
-Open source (MIT): [url=https://github.com/synthalorian/war-banners]github.com/synthalorian/war-banners[/url]
+Open source (MIT): [url=https://github.com/Blackshield-Company/war-banners]github.com/Blackshield-Company/war-banners[/url]
 
 [size=4][b]Credits[/b][/size]
 [list]

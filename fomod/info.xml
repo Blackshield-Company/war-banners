@@ -3,7 +3,7 @@
   <Name>War Banners</Name>
   <Author>synthalorian</Author>
   <Version>@VERSION@</Version>
-  <Website>https://github.com/synthalorian/war-banners</Website>
+  <Website>https://github.com/Blackshield-Company/war-banners</Website>
   <Description>Craft three war banners at a tanning rack or a forge and plant them with a lesser power: you and nearby followers rally around them for a short time. Each banner has one buff (armor, stamina regeneration, or weapon damage). Vanilla banner meshes, no world edits. Base game only, no SKSE. Early beta.</Description>
   <Groups>
     <element>Gameplay</element>
